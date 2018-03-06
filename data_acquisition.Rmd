@@ -1,12 +1,31 @@
 ---
-title: "Untitled"
+title: "Kiva Data Aquisition"
 author: "IG"
 date: "March 6, 2018"
-output: html_document
+output:
+  github_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#install.packages("ggplot2") # Data visualization
+#install.packages("readr") # CSV file I/O, e.g. the read_csv function
+#install.packages("leaflet")
+#install.packages("RColorBrewer")
+#install.packages("data.table")
+#install.packages("IRdisplay") # Display HTML
+#install.packages("alluvial")
+#install.packages("treemap")
+#install.packages("ggridges") # density ridges
+#install.packages("gganimate")
+#install.packages("reshape2")
+#install.packages("IRdisplay") # to display GIF
+#install.packages("tweenr") # to interpolate
+#install.packages("zoo")
+#install.packages("ggcorrplot")
 ```
 
 ### Load libraries
@@ -20,7 +39,7 @@ library(IRdisplay) # Display HTML
 library(alluvial)
 library(treemap)
 library(ggridges) # density ridges
-library(gganimate)
+#library(gganimate)
 library(reshape2)
 library(IRdisplay) # to display GIF
 library(tweenr) # to interpolate
@@ -30,10 +49,12 @@ library(ggcorrplot)
 
 ### Download files
 ```{r}
-loans <- read_csv("../input/data-science-for-good-kiva-crowdfunding/kiva_loans.csv")
-locations <- read_csv("../input/data-science-for-good-kiva-crowdfunding/kiva_mpi_region_locations.csv")
-theme_ids <- read_csv("../input/data-science-for-good-kiva-crowdfunding/loan_theme_ids.csv")
-region <- read_csv("../input/data-science-for-good-kiva-crowdfunding/loan_themes_by_region.csv")
-poverty <- read_csv("../input/poverty-and-equity-database/data.csv")
+data_location = "C:/Users/iganelin/Dropbox/DS_and_ML/Kiva/all_data/"
+
+#loans <- read_csv("../data/kiva_loans.csv")
+#theme_ids <- read_csv("data/loan_theme_ids.csv")
+locations <- read_csv(paste(data_location, "kiva_mpi_region_locations.csv", sep = ""))
+region <- read_csv(paste(data_location, "loan_themes_by_region.csv", sep = ""))
+poverty <- read_csv(paste(data_location, "data.csv", sep = ""))
 ```
 
