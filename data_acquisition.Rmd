@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ### Load libraries
-```{r}
+```{r, echo=FALSE, message=FALSE}
 library(ggplot2) # Data visualization
 library(readr) # CSV file I/O, e.g. the read_csv function
 library(leaflet)
@@ -48,18 +48,18 @@ library(ggcorrplot)
 ```
 
 ### Download files
-```{r}
+```{r, echo=FALSE, message=FALSE}
 
 data_location = "C:/Users/GIL/Dropbox/DS_and_ML/Kiva/all_data/"
 
-#loans <- read_csv("../data/kiva_loans.csv")
-#theme_ids <- read_csv("data/loan_theme_ids.csv")
+loans <- read_csv(paste(data_location, "kiva_loans.csv", sep = ""))
+theme_ids <- read_csv(paste(data_location, "loan_theme_ids.csv", sep = ""))
 locations <- read_csv(paste(data_location, "kiva_mpi_region_locations.csv", sep = ""))
 region <- read_csv(paste(data_location, "loan_themes_by_region.csv", sep = ""))
 poverty <- read_csv(paste(data_location, "data.csv", sep = ""))
 ```
 
-```{r}
+```{r, message=FALSE}
 region <- as.data.table(region)
 data <- na.omit(region[, .(Total_amount = sum(amount), LocationName), by=list(lat, lon)])
 
