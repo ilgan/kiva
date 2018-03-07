@@ -49,12 +49,41 @@ library(ggcorrplot)
 
 ### Download files
 ```{r}
-data_location = "C:/Users/iganelin/Dropbox/DS_and_ML/Kiva/all_data/"
+
+data_location = "C:/Users/GIL/Dropbox/DS_and_ML/Kiva/all_data/"
 
 #loans <- read_csv("../data/kiva_loans.csv")
 #theme_ids <- read_csv("data/loan_theme_ids.csv")
 locations <- read_csv(paste(data_location, "kiva_mpi_region_locations.csv", sep = ""))
 region <- read_csv(paste(data_location, "loan_themes_by_region.csv", sep = ""))
 poverty <- read_csv(paste(data_location, "data.csv", sep = ""))
+```
+
+```{r}
+region <- as.data.table(region)
+data <- na.omit(region[, .(Total_amount = sum(amount), LocationName), by=list(lat, lon)])
+
+#Create the colorpal and the Leaflet map
+colorpal <-   colorNumeric(
+  palette = colorRamp(c('#aef4f9',"#0400ff"), interpolate="linear"),
+  reverse =  FALSE,
+  domain = data$Total_amount  )
+
+
+leaflet(data = data) %>% 
+  fitBounds(~min(data$lon), ~min(data$lat), ~max(data$lon), ~max(data$lat))  %>% 
+  clearShapes()   %>%
+  addProviderTiles(providers$OpenStreetMap.BlackAndWhite) %>%
+  addCircles(data = data,
+             lng = ~lon,
+             lat = ~lat,
+             popup =   ~paste( "Location: ", as.character(LocationName), 
+                               "Amount: ", as.character(Total_amount)),
+             radius = ~(log(Total_amount)+1) * 10000,
+             color = ~colorpal(Total_amount),
+             opacity = 0.6,
+             fillOpacity = 0.4, 
+             group = "Amount" ) 
+	
 ```
 
