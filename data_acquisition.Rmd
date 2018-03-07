@@ -64,7 +64,7 @@ region <- as.data.table(region)
 data <- na.omit(region[, .(Total_amount = sum(amount), LocationName), by=list(lat, lon)])
 
 #Create the colorpal and the Leaflet map
-colorpal <-   colorNumeric(
+colorpal <- colorNumeric(
   palette = colorRamp(c('#aef4f9',"#0400ff"), interpolate="linear"),
   reverse =  FALSE,
   domain = data$Total_amount  )
@@ -79,7 +79,7 @@ leaflet(data = data) %>%
              lat = ~lat,
              popup =   ~paste( "Location: ", as.character(LocationName), 
                                "Amount: ", as.character(Total_amount)),
-             radius = ~(log(Total_amount)+1) * 10000,
+             radius = ~(log(Total_amount)+1) * 1000,
              color = ~colorpal(Total_amount),
              opacity = 0.6,
              fillOpacity = 0.4, 
